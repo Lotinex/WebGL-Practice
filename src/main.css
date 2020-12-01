@@ -1,0 +1,49 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+
+.info {
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin:auto;
+    display: flex;
+    width: 200px;
+    height: 70px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+#direction {
+    margin-top: 50px;
+    font-size: 30px;
+}
+#speed {
+    margin-top: 150px;
+    font-size: 25px;
+}
+.infoText {
+    color: rgb(90, 99, 228);
+    text-shadow: 0px 0px 3px rgb(90, 99, 228);
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+}
+.infoValue {
+    position: absolute;
+    right:0;
+    margin-right: 20px;
+    color: white;
+    text-shadow: 0px 0px 3px white;
+
+}

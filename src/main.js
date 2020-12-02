@@ -1,33 +1,32 @@
 document.getElementById('c').width = window.innerWidth;
 document.getElementById('c').height = window.innerHeight;
-var positionAttributeLocation;
-var resolutionUniformLocation;
-var colorUniformLocation;
-var canvas = document.querySelector("#c");
-var WebGL = canvas.getContext("webgl");
-var program;
+let positionAttributeLocation;
+let resolutionUniformLocation;
+let colorUniformLocation;
+let canvas = document.querySelector("#c");
+/**@type {WebGL2RenderingContext} */
+let WebGL = canvas.getContext("webgl");
+let program;
 
-var positionBuffer;
-var fragmentShaderSource;
-var vertexShader;
-var fragmentShader;
-var vertexShaderSource;
+let positionBuffer;
+let fragmentShaderSource;
+let vertexShader;
+let fragmentShader;
+let vertexShaderSource;
 
 const state = {
     xMoveSpeed: 3,
     yMoveSpeed: 3,
     keyPress: {}
 };
-
 function createShader(WebGL, type, source) {
-  var shader = WebGL.createShader(type);
+  let shader = WebGL.createShader(type);
   WebGL.shaderSource(shader, source);
   WebGL.compileShader(shader);
-  var success = WebGL.getShaderParameter(shader, WebGL.COMPILE_STATUS);
+  let success = WebGL.getShaderParameter(shader, WebGL.COMPILE_STATUS);
   if (success) {
     return shader;
   }
-  console.log(WebGL.getShaderInfoLog(shader));
   WebGL.deleteShader(shader);
 }
 let Triangle1Position = [
@@ -41,19 +40,17 @@ let Triangle2Position = [
     300, 600
 ];
 function createProgram(WebGL, vertexShader, fragmentShader) {
-  var program = WebGL.createProgram();
+  let program = WebGL.createProgram();
   WebGL.attachShader(program, vertexShader);
   WebGL.attachShader(program, fragmentShader);
   WebGL.linkProgram(program);
-  var success = WebGL.getProgramParameter(program, WebGL.LINK_STATUS);
+  let success = WebGL.getProgramParameter(program, WebGL.LINK_STATUS);
   if (success) {
     return program;
   }
-  console.log(WebGL.getProgramInfoLog(program));
   WebGL.deleteProgram(program);
 } 
 function init(){
-    /**@type {WebGL2RenderingContext} */
     if (!WebGL) {
         return;
     }
@@ -83,15 +80,15 @@ function main() {
   WebGL.enableVertexAttribArray(positionAttributeLocation);
   WebGL.uniform2f(resolutionUniformLocation, WebGL.canvas.width, WebGL.canvas.height);
   WebGL.bindBuffer(WebGL.ARRAY_BUFFER, positionBuffer);
-  var size = 2;          
-  var type = WebGL.FLOAT;   
-  var normalize = false; 
-  var stride = 0;        
-  var offset = 0;        
+  let size = 2;          
+  let type = WebGL.FLOAT;   
+  let normalize = false; 
+  let stride = 0;        
+  let offset = 0;        
   WebGL.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
-  var primitiveType = WebGL.TRIANGLES;
-  var offset = 0;
-  var count = 6;
+  let primitiveType = WebGL.TRIANGLES;
+  let drawOffset = 0;
+  let count = 6;
   WebGL.uniform4f(
     colorUniformLocation,
     0.4,
@@ -99,7 +96,7 @@ function main() {
     0.7,
     1
   );
-  WebGL.drawArrays(primitiveType, offset, count);
+  WebGL.drawArrays(primitiveType, drawOffset, count);
 }
 
 function updateX(arr, ...xAddValues){
@@ -109,11 +106,6 @@ function updateY(arr, ...yAddValues){
     arr.forEach((e, i) => U.hasRemainder(i, 2) ? U.editArrayIndexElement(arr, i, e + yAddValues[i]) : null)
 }
 function update(){
-    /*
-    U.multipleArrayForeach([Triangle1Position, Triangle2Position], (arr, coord, index) => {
-        if(!U.hasRemainder(index, 2)) U.editArrayIndexElement(arr, index, ++coord)
-    })
-    */
     if(state.keyPress.w){
         U.multipleArrayForeach([Triangle1Position, Triangle2Position], (arr, coord, i) => {
             updateY(arr, ...U.repeatValue(-state.yMoveSpeed, 6))
@@ -134,7 +126,6 @@ function update(){
             updateX(arr, ...U.repeatValue(state.xMoveSpeed, 6))
         })
     }
-    //console.log([...Triangle1Position, ...Triangle2Position])
     WebGL.bufferData(WebGL.ARRAY_BUFFER, new Float32Array([...Triangle1Position, ...Triangle2Position]), WebGL.STATIC_DRAW);
     document.getElementById('directionValue').innerText = Object.keys(state.keyPress);
     document.getElementById('speedValue').innerText = `x:${state.xMoveSpeed} y:${state.yMoveSpeed}`

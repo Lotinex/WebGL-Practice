@@ -1,2 +1,3 @@
 # WebGL-Practice
-WebGL Practice
+WebGL 연습용 레포지토리   
+준비 부분(셰이더) 및 여러 부분은 아직 이해가 가지 않아 예제 코드를 사용합니다.   

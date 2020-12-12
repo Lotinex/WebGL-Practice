@@ -19,6 +19,7 @@ const state = {
     yMoveSpeed: 3,
     keyPress: {}
 };
+/**@param {WebGL2RenderingContext} WebGL */
 function createShader(WebGL, type, source) {
   let shader = WebGL.createShader(type);
   WebGL.shaderSource(shader, source);
